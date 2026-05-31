@@ -51,7 +51,7 @@ class InvestmentVisualizer:
             color='#D62728',
             s=180,
             zorder=5,
-            label=f"最佳时点：第{years[best_idx]}年"
+            label=f"Best timing: Year {years[best_idx]}"
         )
 
         ax.axhline(y=0, color='#333333', linestyle='--', linewidth=1)
@@ -83,9 +83,9 @@ class InvestmentVisualizer:
         ax1.bar(x + width / 2, costs, width, color='#FF7F0E', alpha=0.78, label='投资成本')
         ax1.set_xticks(x)
         ax1.set_xticklabels(years)
-        ax1.set_xlabel('等待年限（年）', fontsize=12)
-        ax1.set_ylabel('金额（万元）', fontsize=12)
-        ax1.set_title('收益与投资成本对比', fontsize=14, fontweight='bold')
+        ax1.set_xlabel('Waiting Years', fontsize=12)
+        ax1.set_ylabel('Amount (10k CNY)', fontsize=12)
+        ax1.set_title('Returns vs Investment Cost', fontsize=14, fontweight='bold')
         ax1.legend(fontsize=10)
         ax1.grid(True, alpha=0.25, axis='y')
 
@@ -103,7 +103,7 @@ class InvestmentVisualizer:
 
     def plot_sensitivity_analysis(self, sensitivity_df: pd.DataFrame):
         if sensitivity_df.empty:
-            st.warning("敏感性分析没有可展示的数据。")
+            st.warning("No data available for sensitivity analysis display.")
             return
 
         fig, ax = plt.subplots(figsize=(10, 5))
@@ -149,7 +149,7 @@ class InvestmentVisualizer:
 
     def plot_cash_flow_diagram(self, investment_year: int, cash_flows: List[float]):
         if not cash_flows:
-            st.warning("当前方案没有现金流数据。")
+            st.warning("No cash flow data available for current plan.")
             return
 
         years = list(range(investment_year + 1, investment_year + len(cash_flows) + 1))
@@ -157,9 +157,9 @@ class InvestmentVisualizer:
 
         ax.bar(years, cash_flows, color='#2CA02C', alpha=0.76)
         ax.axhline(y=0, color='#333333', linewidth=1)
-        ax.set_xlabel('年份', fontsize=12)
-        ax.set_ylabel('净现金流（万元）', fontsize=12)
-        ax.set_title(f'第{investment_year}年投资后的净现金流', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Year', fontsize=12)
+        ax.set_ylabel('Net Cash Flow (10k CNY)', fontsize=12)
+        ax.set_title(f'Net Cash Flow After Year {investment_year} Investment', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.25, axis='y')
 
         st.pyplot(fig)
