@@ -35,7 +35,7 @@ class InvestmentVisualizer:
     def plot_npv_curve(self, results: List[Dict]):
         valid_results = self._valid_results(results)
         if not valid_results:
-            st.warning("没有有效投资年份，无法绘制 NPV 曲线。")
+            st.warning("No valid investment years available, unable to plot NPV curve.")
             return
 
         years = [result['投资年份'] for result in valid_results]
@@ -55,9 +55,9 @@ class InvestmentVisualizer:
         )
 
         ax.axhline(y=0, color='#333333', linestyle='--', linewidth=1)
-        ax.set_xlabel('等待年限（年）', fontsize=12)
-        ax.set_ylabel('NPV（万元）', fontsize=12)
-        ax.set_title('NPV 随等待时间变化', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Waiting Years', fontsize=12)
+        ax.set_ylabel('NPV (10k CNY)', fontsize=12)
+        ax.set_title('NPV vs Waiting Time', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.25)
         ax.legend(fontsize=10)
 
@@ -67,7 +67,7 @@ class InvestmentVisualizer:
     def plot_investment_timing(self, results: List[Dict]):
         valid_results = self._valid_results(results)
         if not valid_results:
-            st.warning("没有有效投资年份，无法绘制投资时点分析图。")
+            st.warning("No valid investment years available, unable to plot investment timing analysis.")
             return
 
         years = [result['投资年份'] for result in valid_results]
@@ -79,8 +79,8 @@ class InvestmentVisualizer:
 
         width = 0.36
         x = np.arange(len(years))
-        ax1.bar(x - width / 2, returns, width, color='#2CA02C', alpha=0.78, label='累计收益')
-        ax1.bar(x + width / 2, costs, width, color='#FF7F0E', alpha=0.78, label='投资成本')
+        ax1.bar(x - width / 2, returns, width, color='#2CA02C', alpha=0.78, label='Cumulative Returns')
+        ax1.bar(x + width / 2, costs, width, color='#FF7F0E', alpha=0.78, label='Investment Cost')
         ax1.set_xticks(x)
         ax1.set_xticklabels(years)
         ax1.set_xlabel('Waiting Years', fontsize=12)
@@ -92,9 +92,9 @@ class InvestmentVisualizer:
         colors = ['#C44E52' if npv < 0 else '#4C72B0' for npv in npvs]
         ax2.bar(years, npvs, color=colors, alpha=0.82)
         ax2.axhline(y=0, color='#333333', linestyle='--', linewidth=1)
-        ax2.set_xlabel('等待年限（年）', fontsize=12)
-        ax2.set_ylabel('NPV（万元）', fontsize=12)
-        ax2.set_title('各投资年份 NPV', fontsize=14, fontweight='bold')
+        ax2.set_xlabel('Waiting Years', fontsize=12)
+        ax2.set_ylabel('NPV (10k CNY)', fontsize=12)
+        ax2.set_title('NPV by Investment Year', fontsize=14, fontweight='bold')
         ax2.grid(True, alpha=0.25, axis='y')
 
         plt.tight_layout()
@@ -139,9 +139,9 @@ class InvestmentVisualizer:
         max_year = max(years) if len(years) else 0
         ax.set_ylim(-0.45, max(1.0, max_year + 0.8))
         ax.set_yticks(range(0, int(max(1, max_year)) + 1))
-        ax.set_xlabel('折现率', fontsize=12)
-        ax.set_ylabel('推荐等待年限（年）', fontsize=12)
-        ax.set_title('折现率敏感性分析', fontsize=14, fontweight='bold')
+        ax.set_xlabel('Discount Rate', fontsize=12)
+        ax.set_ylabel('Recommended Waiting Years', fontsize=12)
+        ax.set_title('Discount Rate Sensitivity Analysis', fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.25, axis='y')
 
         st.pyplot(fig)
